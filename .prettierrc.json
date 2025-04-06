@@ -1,8 +1,13 @@
 {
- "plugins": ["prettier-plugin-tailwindcss"],
- "tabWidth": 2,
-    "semi": false
-    
-
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tabWidth": 2,
+  "semi": false,
+  "tailwindConfig": "./tailwind.config.mjs",
+  "tailwindFunctions": ["clsx", "cn", "tw"],
+  "tailwindAttributes": ["className"],
+  "tailwindcssConfig": {
+    "sort": true,
+    "removeDuplicates": true
+  }
 }
 
