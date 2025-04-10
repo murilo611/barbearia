@@ -9,17 +9,21 @@ import { Avatar, AvatarImage } from "./_components/ui/avatar"
 import { db } from "./_lib/prisma"
 import BarbershopItem from "./_components/ui/barbershop-item"
 
-const Home = async ()  => {
-
-  // Chamar meu banco de dados
+const Home = async () => {
+  // CHAMR MEU BANCO DE DADOS
   const barbershops = await db.barbershop.findMany({})
- 
+  const popularBarbershops = await db.barbershop.findMany({
+    orderBy: {
+      name: "desc",
+    },
+  })
+
   return (
-    <div className="p-5">
+    <div>
       {/* HEADER */}
       <Header />
-      <div>
-        <h2 className="mt-6 text-xl font-bold">Olá, Jimmy</h2>
+      <div className="p-5">
+        <h2 className="mt-6 text-xl font-bold">Olá, Murilo</h2>
         <p>Domingo, 14 de agosto</p>
 
         {/* BUSCA */}
@@ -29,6 +33,39 @@ const Home = async ()  => {
             <SearchIcon />
           </Button>
         </div>
+
+        {/* Busca rapida */}
+        <div className="flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden ">
+          <Button variant={"secondary"} className="mt-6">Cabelo 
+          <Image src="cabelo.svg" width={16} height={16}  alt="cabelo"/>
+          </Button>
+
+          <Button variant={"secondary"} className="mt-6">Barba 
+          <Image src="barba.svg" width={16} height={16}  alt="cabelo"/>
+          </Button>
+
+          <Button variant={"secondary"} className="mt-6">Acabamento 
+          <Image src="acabamento.svg" width={16} height={16}  alt="cabelo"/>
+          </Button>
+
+           <Button variant={"secondary"} className="mt-6">Sombrancelha
+          <Image src="sobrancelha.svg" width={16} height={16}  alt="cabelo"/>
+          </Button>
+
+           <Button variant={"secondary"} className="mt-6">Massagem 
+          <Image src="massagem.svg" width={16} height={16}  alt="cabelo"/>
+          </Button>
+
+          <Button variant={"secondary"} className="mt-6">Hidratação
+          <Image src="hidratacao.svg" width={16} height={16}  alt="cabelo"/>
+          </Button>
+
+       
+
+          
+        </div>
+
+        
 
         {/* IMAGEM */}
         <div className="relative mt-6 h-[150px] w-full">
@@ -55,7 +92,7 @@ const Home = async ()  => {
                 <Avatar className="h-6 w-6">
                   <AvatarImage src="https://utfs.io/f/60f24f5c-9ed3-40ba-8c92-0cd1dcd043f9-16w.png"></AvatarImage>
                 </Avatar>
-                <p className="text-sm">Barbearia do Jimmy</p>
+                <p className="text-sm">Barbearia do Murilo</p>
               </div>
             </div>
 
@@ -67,17 +104,35 @@ const Home = async ()  => {
             </div>
           </CardContent>
         </Card>
-         {/* AGENDAMENTO */}
+        {/* AGENDAMENTO */}
         <h2 className="mt-6 mb-3 text-xs font-bold text-gray-400 uppercase">
-          Recomendados
+          recomendados
         </h2>
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {barbershops.map((barbershop) => (
+            <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+          ))}
+        </div>
 
-
-      <div className="flex gap-4 overflow-auto [[&::-webkit-scrollbar]:hidden ]"> {barbershops.map((barbershop) => (
-          <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-      ))}
+        {/* POPULARES */}
+        <h2 className="mt-6 mb-3 text-xs font-bold text-gray-400 uppercase">
+          populares
+        </h2>
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {popularBarbershops.map((barbershop) => (
+            <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+          ))}
         </div>
       </div>
+
+      <footer> 
+      {/* FOOTER */}
+      <Card className="mt-6 rounded-none">
+        <CardContent className="px-5">
+         <p className="text-sm"> © 2025 Copyrigth <span> Murilo Boaro.</span></p> 
+        </CardContent>
+      </Card>
+      </footer>
     </div>
   )
 }
