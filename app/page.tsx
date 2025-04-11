@@ -1,13 +1,14 @@
-import { SearchIcon } from "lucide-react"
+import { BookImageIcon, SearchIcon } from "lucide-react"
 import Header from "./_components/ui/header"
 import { Button } from "./_components/ui/button"
 import { Input } from "./_components/ui/input"
 import Image from "next/image"
 import { Card, CardContent } from "./_components/ui/card"
-import { Badge } from "./_components/ui/badge"
-import { Avatar, AvatarImage } from "./_components/ui/avatar"
 import { db } from "./_lib/prisma"
 import BarbershopItem from "./_components/ui/barbershop-item"
+import { quickSaearchOptions } from "./_constants/search"
+import BookingItem from "./_components/ui/booking-item"
+
 
 const Home = async () => {
   // CHAMR MEU BANCO DE DADOS
@@ -35,33 +36,14 @@ const Home = async () => {
         </div>
 
         {/* Busca rapida */}
-        <div className="flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden ">
-          <Button variant={"secondary"} className="mt-6">Cabelo 
-          <Image src="cabelo.svg" width={16} height={16}  alt="cabelo"/>
+        <div className=" mt-6 flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden ">
+          {quickSaearchOptions.map((option) => (<Button className="gap-2 " variant="secondary" key={option.title}>
+         
+            <Image src={option.imageUrl} width={16} height={16} alt={option.title} />
+            
+            {option.title}
           </Button>
-
-          <Button variant={"secondary"} className="mt-6">Barba 
-          <Image src="barba.svg" width={16} height={16}  alt="cabelo"/>
-          </Button>
-
-          <Button variant={"secondary"} className="mt-6">Acabamento 
-          <Image src="acabamento.svg" width={16} height={16}  alt="cabelo"/>
-          </Button>
-
-           <Button variant={"secondary"} className="mt-6">Sombrancelha
-          <Image src="sobrancelha.svg" width={16} height={16}  alt="cabelo"/>
-          </Button>
-
-           <Button variant={"secondary"} className="mt-6">Massagem 
-          <Image src="massagem.svg" width={16} height={16}  alt="cabelo"/>
-          </Button>
-
-          <Button variant={"secondary"} className="mt-6">Hidratação
-          <Image src="hidratacao.svg" width={16} height={16}  alt="cabelo"/>
-          </Button>
-
-       
-
+        ))}
           
         </div>
 
@@ -76,37 +58,13 @@ const Home = async () => {
             className="rounded-xl object-cover"
           />
         </div>
-        {/* AGENDAMENTO */}
-        <h2 className="mt-6 mb-3 text-xs font-bold text-gray-400 uppercase">
-          agendamentos
-        </h2>
-        <Card>
-          <CardContent className="flex justify-between p-0">
-            {/* ESQUERDA */}
-            <div className="flex flex-col gap-2 pl-5">
-              <Badge className="w-fit">Confirmado</Badge>
-              <h3 className="font-semibold">Corte de Pentelho</h3>
+        {/* AGENDAMENTO - Todo: receber agendamentos propriedade */}
 
-              {/* AVATAR */}
-              <div className="flex items-center gap-2">
-                <Avatar className="h-6 w-6">
-                  <AvatarImage src="https://utfs.io/f/60f24f5c-9ed3-40ba-8c92-0cd1dcd043f9-16w.png"></AvatarImage>
-                </Avatar>
-                <p className="text-sm">Barbearia do Murilo</p>
-              </div>
-            </div>
-
-            {/* DIREITA */}
-            <div className="flex flex-col items-center justify-center border-l-2 border-solid px-5">
-              <p className="text-sm">Agosto</p>
-              <p className="text-2xl">14</p>
-              <p className="text-sm">14:30</p>
-            </div>
-          </CardContent>
-        </Card>
-        {/* AGENDAMENTO */}
+        <BookingItem></BookingItem>
+        
+        {/* Recomendados */}
         <h2 className="mt-6 mb-3 text-xs font-bold text-gray-400 uppercase">
-          recomendados
+          Recomendados
         </h2>
         <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
           {barbershops.map((barbershop) => (
@@ -116,7 +74,7 @@ const Home = async () => {
 
         {/* POPULARES */}
         <h2 className="mt-6 mb-3 text-xs font-bold text-gray-400 uppercase">
-          populares
+          Populares
         </h2>
         <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
           {popularBarbershops.map((barbershop) => (
@@ -125,13 +83,13 @@ const Home = async () => {
         </div>
       </div>
 
-      <footer> 
-      {/* FOOTER */}
-      <Card className="mt-6 rounded-none">
-        <CardContent className="px-5">
-         <p className="text-sm"> © 2025 Copyrigth <span> Murilo Boaro.</span></p> 
-        </CardContent>
-      </Card>
+      <footer>
+        {/* FOOTER */}
+        <Card className="mt-6 rounded-none">
+          <CardContent className="px-5">
+            <p className="text-sm">© 2025 Copyright <span>Murilo Boaro</span></p>
+          </CardContent>
+        </Card>
       </footer>
     </div>
   )
