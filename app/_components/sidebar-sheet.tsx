@@ -34,8 +34,6 @@ const SidebarSheet = () => {
       </SheetHeader>
 
       <div className="mx-5 flex items-center justify-between gap-3 border-b border-solid pb-5">
-        <h2 className="font-bold">Olá Faça seu Login !</h2>
-
         {data?.user ? (
           <div className="flex items-center gap-2">
             <Avatar>
@@ -54,6 +52,7 @@ const SidebarSheet = () => {
           </div>
         ) : (
           <>
+            <h2 className="font-bold">Olá Faça seu Login !</h2>
             <Dialog>
               <DialogTrigger asChild>
                 <Button size="icon">
