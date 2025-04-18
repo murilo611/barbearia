@@ -1,10 +1,11 @@
-import {  CalendarIcon,  HomeIcon, LogOutIcon, } from "lucide-react";
+import {  CalendarIcon,  HomeIcon, LogInIcon, LogOutIcon, PanelBottom, } from "lucide-react";
 import { quickSaearchOptions } from "@/app/_constants/search";
 import Image from "next/image";
 import Link from "next/link";
 import {  SheetClose, SheetContent, SheetHeader, SheetTitle, } from "./ui/sheet";
 import { Button } from "./ui/button";
 import { Avatar, AvatarImage } from "./ui/avatar";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 
 
@@ -17,8 +18,28 @@ const SidebarSheet = () => {
               <SheetTitle className="ml-2">Menu</SheetTitle>
             </SheetHeader>
 
-            <div className="mx-5 flex items-center border-b border-solid pb-5 gap-2">
-              <Avatar>
+            <div className="mx-5 flex items-center border-b border-solid pb-5 gap-3 justify-between">
+          <h2 className="font-bold ">Olá Faça seu Login !</h2>
+          <Dialog>
+            <DialogTrigger asChild>
+          <Button size="icon">
+            <LogInIcon />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="w-[90%]">
+              <DialogHeader>
+      <DialogTitle>Olá Faça o login na Plataforma !</DialogTitle>
+      <DialogDescription>
+        Conecte-se usando sua conta Google
+      </DialogDescription>
+              </DialogHeader>
+              <Button  variant="outline" className="gap-1 font-bold">
+                <Image src="/google.svg" width={18} height={18} alt="icon google" />
+                 Google
+              </Button>
+            </DialogContent>
+            </Dialog>
+          {/* <Avatar>
                 <AvatarImage
                   src="/avatar.png"
                   alt="avatar"
@@ -30,7 +51,7 @@ const SidebarSheet = () => {
                           <div>
                               <p className="text-lg font-bold">João</p>
                               <p className="text-sm">joao@gmail.com</p>
-                      </div>
+                      </div> */}
                       
             </div>
 
