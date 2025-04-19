@@ -21,11 +21,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog"
-import { signIn, useSession } from "next-auth/react"
+import { signIn, signOut, useSession } from "next-auth/react"
 
 const SidebarSheet = () => {
   const { data } = useSession()
-  const handleloginWithGoogle = () => signIn("google")
+  const handleLoginWithGoogle = () => signIn("google")
+  const handleLogoutClick = () => signOut()
 
   return (
     <SheetContent className="overflow-y-auto">
@@ -70,7 +71,7 @@ const SidebarSheet = () => {
                 <Button
                   variant="outline"
                   className="gap-1 font-bold"
-                  onClick={handleloginWithGoogle}
+                  onClick={handleLoginWithGoogle}
                 >
                   <Image
                     src="/google.svg"
@@ -121,7 +122,11 @@ const SidebarSheet = () => {
       </div>
 
       <div className="mx-5 flex flex-col gap-1 border-b border-solid py-5">
-        <Button className="justify-start gap-2" variant="ghost">
+        <Button
+          className="justify-start gap-2"
+          variant="ghost"
+          onClick={handleLogoutClick}
+        >
           <LogOutIcon size={18} />
           Sair da conta
         </Button>
