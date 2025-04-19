@@ -1,13 +1,11 @@
-import { BookImageIcon, SearchIcon } from "lucide-react"
 import Header from "./_components/ui/header"
 import { Button } from "./_components/ui/button"
-import { Input } from "./_components/ui/input"
 import Image from "next/image"
 import { db } from "./_lib/prisma"
 import BarbershopItem from "./_components/ui/barbershop-item"
 import { quickSaearchOptions } from "./_constants/search"
 import BookingItem from "./_components/ui/booking-item"
-
+import Search from "./_components/search"
 
 const Home = async () => {
   // CHAMR MEU BANCO DE DADOS
@@ -27,26 +25,24 @@ const Home = async () => {
         <p>Domingo, 14 de agosto</p>
 
         {/* BUSCA */}
-        <div className="mt-6 flex items-center gap-2">
-          <Input placeholder="Encontre um serviço ou salão" />
-          <Button size={"icon"}>
-            <SearchIcon />
-          </Button>
+        <div className="mt-6">
+          <Search />
         </div>
-
         {/* Busca rapida */}
-        <div className=" mt-6 flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden ">
-          {quickSaearchOptions.map((option) => (<Button className="gap-2 " variant="secondary" key={option.title}>
-         
-            <Image src={option.imageUrl} width={16} height={16} alt={option.title} />
-            
-            {option.title}
-          </Button>
-        ))}
-          
-        </div>
+        <div className="mt-6 flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {quickSaearchOptions.map((option) => (
+            <Button className="gap-2" variant="secondary" key={option.title}>
+              <Image
+                src={option.imageUrl}
+                width={16}
+                height={16}
+                alt={option.title}
+              />
 
-        
+              {option.title}
+            </Button>
+          ))}
+        </div>
 
         {/* IMAGEM */}
         <div className="relative mt-6 h-[150px] w-full">
@@ -60,7 +56,7 @@ const Home = async () => {
         {/* AGENDAMENTO - Todo: receber agendamentos propriedade */}
 
         <BookingItem></BookingItem>
-        
+
         {/* Recomendados */}
         <h2 className="mt-6 mb-3 text-xs font-bold text-gray-400 uppercase">
           Recomendados
@@ -81,8 +77,6 @@ const Home = async () => {
           ))}
         </div>
       </div>
-
-     
     </div>
   )
 }

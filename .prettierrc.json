@@ -6,8 +6,8 @@
   "tailwindFunctions": ["clsx", "cn", "tw"],
   "tailwindAttributes": ["className"],
   "tailwindcssConfig": {
+    "singleQuote": true,
     "sort": true,
     "removeDuplicates": true
   }
 }
-
