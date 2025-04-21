@@ -18,11 +18,12 @@ export default function RootLayout({
     <html lang="en">
       <body className="dark">
         <AuthProvider>
-          {children}
-          <Toaster richColors position="top-center" />
-
-          <Footer />
+          <div className="flex flex-col h-full w-full">
+            <div className="flex-1">{children}</div>
+            <Footer />
+          </div>
         </AuthProvider>
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   )

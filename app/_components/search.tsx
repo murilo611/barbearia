@@ -1,30 +1,57 @@
 "use client"
-
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { Input } from "./ui/input"
-import { Button } from "./ui/button"
 import { SearchIcon } from "lucide-react"
+import { Button } from "./ui/button"
+import { Input } from "./ui/input"
+import { useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form"
+
+const formSchema = z.object({
+  title: z.string().trim().min(1, {
+    message: "Campo obrigatorio, você precisa de pelo menos 1 caracter",
+  }),
+})
 
 const Search = () => {
-  const [search, setSearch] = useState("")
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+    },
+  })
   const router = useRouter()
 
-  const handleSubmit = () => {
-  router.push(`/barbershops?search=${search}`)
+  const handleSubmit = (data: z.infer<typeof formSchema>) => {
+    router.push(`/barbershops?search=${data.title}`)
+
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <Input
-        placeholder="Encontre um serviço ou salão"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <Button size={"icon"} onClick={handleSubmit}>
-        <SearchIcon />
-      </Button>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="flex gap-2">
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormControl>
+                <Input
+                  placeholder="Encontre um Salão ou um serviço"
+                  {...field}
+                  className="w-full"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">
+          <SearchIcon />
+        </Button>
+      </form>
+    </Form>
   )
 }
 
