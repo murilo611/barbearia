@@ -1,18 +1,12 @@
 "use client"
 
-import {
-  CalendarIcon,
-  HomeIcon,
-  LogInIcon,
-  LogOutIcon,
-  PanelBottom,
-} from "lucide-react"
-import { quickSaearchOptions } from "@/app/_constants/search"
-import Image from "next/image"
-import Link from "next/link"
-import { SheetClose, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet"
 import { Button } from "./ui/button"
+import { CalendarIcon, HomeIcon, LogInIcon, LogOutIcon } from "lucide-react"
+import { SheetClose, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet"
+import { quickSearchOptions } from "../_constants/search"
 import { Avatar, AvatarImage } from "./ui/avatar"
+import Link from "next/link"
+import Image from "next/image"
 import {
   Dialog,
   DialogContent,
@@ -39,21 +33,22 @@ const SidebarSheet = () => {
           <div className="flex items-center gap-2">
             <Avatar>
               <AvatarImage
-                src={data?.user.image ?? ""}
+                src={data?.user?.image ?? ""}
                 alt="avatar"
                 width={40}
                 height={40}
                 className="rounded-full"
               />
             </Avatar>
+
             <div>
-              <p className="text-lg font-bold">{data.user.name}</p>
+              <p className="font-bold">{data.user.name}</p>
               <p className="text-sm">{data.user.email}</p>
             </div>
           </div>
         ) : (
           <>
-            <h2 className="font-bold">Olá Faça seu Login !</h2>
+            <h2 className="font-bold">Olá Faça seu login!</h2>
             <Dialog>
               <DialogTrigger asChild>
                 <Button size="icon">
@@ -62,9 +57,9 @@ const SidebarSheet = () => {
               </DialogTrigger>
               <DialogContent className="w-[90%]">
                 <DialogHeader>
-                  <DialogTitle>Olá Faça o login na Plataforma !</DialogTitle>
+                  <DialogTitle>Faça login na plataforma</DialogTitle>
                   <DialogDescription>
-                    Conecte-se usando sua conta Google
+                    Conecte-se usando sua conta do Google
                   </DialogDescription>
                 </DialogHeader>
 
@@ -77,7 +72,7 @@ const SidebarSheet = () => {
                     src="/google.svg"
                     width={18}
                     height={18}
-                    alt="icon google"
+                    alt="logo google"
                   />
                   Google
                 </Button>
@@ -90,7 +85,7 @@ const SidebarSheet = () => {
       <div className="mx-5 flex flex-col gap-1 border-b border-solid py-5">
         <SheetClose asChild>
           <Button className="justify-start gap-2" variant="ghost" asChild>
-            <Link href={"/"}>
+            <Link href="/">
               <HomeIcon size={18} />
               Início
             </Link>
@@ -104,20 +99,25 @@ const SidebarSheet = () => {
       </div>
 
       <div className="mx-5 flex flex-col gap-1 border-b border-solid py-5">
-        {quickSaearchOptions.map((option) => (
-          <Button
-            key={option.title}
-            className="justify-start gap-2"
-            variant="ghost"
-          >
-            <Image
-              src={option.imageUrl}
-              alt={option.title}
-              width={18}
-              height={18}
-            />
-            {option.title}
-          </Button>
+        {quickSearchOptions.map((option) => (
+          <SheetClose asChild key={option.title}>
+            <Button
+              key={option.title}
+              className="justify-start gap-2"
+              variant="ghost"
+              asChild
+            >
+              <Link href={`/barbershops?service=${option.title}`}>
+                <Image
+                  src={option.imageUrl}
+                  alt={option.title}
+                  width={18}
+                  height={18}
+                />
+                {option.title}
+              </Link>
+            </Button>
+          </SheetClose>
         ))}
       </div>
 

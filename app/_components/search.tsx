@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form"
 
 const formSchema = z.object({
   title: z.string().trim().min(1, {
-    message: "Campo obrigatorio, você precisa de pelo menos 1 caracter",
+    message: "Campo obrigatório, você precisa de pelo menos 1 caractere",
   }),
 })
 
@@ -24,8 +24,7 @@ const Search = () => {
   const router = useRouter()
 
   const handleSubmit = (data: z.infer<typeof formSchema>) => {
-    router.push(`/barbershops?search=${data.title}`)
-
+    router.push(`/barbershops?title=${data.title}`)
   }
 
   return (
@@ -38,7 +37,7 @@ const Search = () => {
             <FormItem className="w-full">
               <FormControl>
                 <Input
-                  placeholder="Encontre um Salão ou um serviço"
+                  placeholder="Encontre um Salão ou Barbearia"
                   {...field}
                   className="w-full"
                 />

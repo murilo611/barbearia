@@ -1,36 +1,31 @@
-interface QuickSaearchOptions {
-  imageUrl: string 
-  title: string 
+interface QuickSearchOption {
+  imageUrl: string
+  title: string
 }
 
-
- export const quickSaearchOptions: QuickSaearchOptions[] = [{
-  imageUrl: "/cabelo.svg",
-  title: "Cabelo"
-},
-
+export const quickSearchOptions: QuickSearchOption[] = [
   {
-  imageUrl: "/barba.svg",
-  title: "Barba"
+    imageUrl: "/cabelo.svg",
+    title: "Cabelo",
   },
-  
   {
-  imageUrl: "/acabamento.svg",
-  title: "Acabamento"
+    imageUrl: "/barba.svg",
+    title: "Barba",
   },
-  
   {
-  imageUrl: "/sobrancelha.svg",
-  title: "Sobrancelha"
+    imageUrl: "/acabamento.svg",
+    title: "Acabamento",
   },
-  
   {
-  imageUrl: "/massagem.svg",
-  title: "Massagem"
+    imageUrl: "/sobrancelha.svg",
+    title: "Sobrancelha",
   },
-  
   {
-  imageUrl: "/hidratacao.svg",
-  title: "Hidratação"
-}
-] 
+    imageUrl: "/massagem.svg",
+    title: "Massagem",
+  },
+  {
+    imageUrl: "/hidratacao.svg",
+    title: "Hidratação",
+  },
+]

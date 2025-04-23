@@ -3,9 +3,10 @@ import { Button } from "./_components/ui/button"
 import Image from "next/image"
 import { db } from "./_lib/prisma"
 import BarbershopItem from "./_components/ui/barbershop-item"
-import { quickSaearchOptions } from "./_constants/search"
+import { quickSearchOptions } from "./_constants/search"
 import BookingItem from "./_components/ui/booking-item"
 import Search from "./_components/search"
+import Link from "next/link"
 
 const Home = async () => {
   // CHAMR MEU BANCO DE DADOS
@@ -21,25 +22,32 @@ const Home = async () => {
       {/* HEADER */}
       <Header />
       <div className="p-5">
-        <h2 className="mt-6 text-xl font-bold">Olá, Murilo</h2>
+        <h2 className="mt-6 text-xl font-bold">Olá, Jimmy</h2>
         <p>Domingo, 14 de agosto</p>
 
         {/* BUSCA */}
         <div className="mt-6">
           <Search />
         </div>
-        {/* Busca rapida */}
-        <div className="mt-6 flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden">
-          {quickSaearchOptions.map((option) => (
-            <Button className="gap-2" variant="secondary" key={option.title}>
-              <Image
-                src={option.imageUrl}
-                width={16}
-                height={16}
-                alt={option.title}
-              />
 
-              {option.title}
+        {/* BUSCA RÁPIDA */}
+        <div className="mt-6 flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {quickSearchOptions.map((option) => (
+            <Button
+              className="gap-2"
+              variant="secondary"
+              key={option.title}
+              asChild
+            >
+              <Link href={`/barbershops?service=${option.title}`}>
+                <Image
+                  src={option.imageUrl}
+                  width={16}
+                  height={16}
+                  alt={option.title}
+                />
+                {option.title}
+              </Link>
             </Button>
           ))}
         </div>
@@ -53,14 +61,15 @@ const Home = async () => {
             className="rounded-xl object-cover"
           />
         </div>
-        {/* AGENDAMENTO - Todo: receber agendamentos propriedade */}
 
-        <BookingItem></BookingItem>
+        {/* AGENDAMENTO - TODO: receber agendamentos como propriedade */}
+        <BookingItem />
 
-        {/* Recomendados */}
+        {/* RECOMENDADOS */}
         <h2 className="mt-6 mb-3 text-xs font-bold text-gray-400 uppercase">
-          Recomendados
+          recomendados
         </h2>
+
         <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
           {barbershops.map((barbershop) => (
             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
@@ -69,8 +78,9 @@ const Home = async () => {
 
         {/* POPULARES */}
         <h2 className="mt-6 mb-3 text-xs font-bold text-gray-400 uppercase">
-          Populares
+          populares
         </h2>
+
         <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
           {popularBarbershops.map((barbershop) => (
             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
