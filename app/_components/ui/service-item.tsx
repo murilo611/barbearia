@@ -55,6 +55,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
   )
+
   const handleDaySelect = (date: Date | undefined) => {
     setSelectedDay(date)
   }
@@ -76,7 +77,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 
       await createBooking({
         serviceId: service.id,
-        userId: "cm9n4uqgw0000wqrok3zwug31npm ",
+        userId: (data?.user as string).id,
         date: newDate,
       })
       toast.success("Reserva criada com sucesso")
