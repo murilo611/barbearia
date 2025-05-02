@@ -22,7 +22,7 @@ const Home = async () => {
       {/* HEADER */}
       <Header />
       <div className="p-5">
-        <h2 className="mt-6 text-xl font-bold">Olá, Jimmy</h2>
+        <h2 className="mt-6 text-xl font-bold">Olá, Murilo</h2>
         <p>Domingo, 14 de agosto</p>
 
         {/* BUSCA */}

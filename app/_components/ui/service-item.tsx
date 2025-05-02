@@ -18,6 +18,8 @@ import { createBooking } from "@/app/_actions/create-booking"
 import { useSession } from "next-auth/react"
 import { toast } from "sonner"
 import { getBookings } from "@/app/_actions/get-bookings"
+import { Dialog, DialogContent } from "./dialog"
+import SingInDialog from "../sing-in-dialog"
 
 interface ServiceItemProps {
   service: BarbershopService
@@ -68,6 +70,7 @@ const getTimeList = (bookings: Booking[]) => {
 }
 
 const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
+  const [singInDialogOpen, setSingInDialogOpen] = useState(false)
   const { data } = useSession()
   const [selectdDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
@@ -88,6 +91,13 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     }
     fetch()
   }, [selectdDay, service.id])
+
+  const handleBookingClick = () => { 
+    if (data?.user) {
+       return setBookingSheetIsOpen(true)
+    }
+      return   setSingInDialogOpen(true)
+  }
 
   const handleBookingSheetOpenChange = () => {
     setSelectedDay(undefined)
@@ -163,7 +173,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() => setBookingSheetIsOpen(true)}
+                  onClick={handleBookingClick}
                 >
                   Reservar
                 </Button>
@@ -295,6 +305,12 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
           </div>
         </CardContent>
       </Card>
+
+      <Dialog open={singInDialogOpen} onOpenChange={(open) => setSingInDialogOpen (open)}>
+        <DialogContent className="w-[90%]">
+          <SingInDialog />
+        </DialogContent>  
+      </Dialog>
     </>
   )
 }
