@@ -98,7 +98,8 @@ const SidebarSheet = () => {
           </SheetClose>
         ))}
       </div>
-
+       
+      {data?.user && (
       <div className="mx-5 flex flex-col gap-1 border-b border-solid py-5">
         <Button
           className="justify-start gap-2"
@@ -108,7 +109,8 @@ const SidebarSheet = () => {
           <LogOutIcon size={18} />
           Sair da conta
         </Button>
-      </div>
+        </div>
+      )}
     </SheetContent>
   )
 }
