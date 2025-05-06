@@ -12,7 +12,7 @@ import SidebarSheet from "../sidebar-sheet"
 
 const Header = () => {
   return (
-    <Card>
+    <Card className="rounded-none ">
       <CardContent className="flex flex-row items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image
