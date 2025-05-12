@@ -5,10 +5,11 @@ import { Card, CardContent } from "./card";
 import { isFuture } from "date-fns";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./sheet";
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./sheet";
 import Image from "next/image";
 import PhoneItem from "../phone-item";
-
+import { Button } from "./button";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./alert-dialog";
 
 interface BookingItemProps { 
   booking: Prisma.BookingGetPayload<{ 
@@ -158,6 +159,48 @@ const BookingItem = ({ booking }: BookingItemProps) => {
            )}
           </div>
          </div>
+         <SheetFooter>
+           <div className="flex itemns-center gap-3 ">
+             <SheetClose >
+               <Button variant="outline" className="flex-1 ">Voltar</Button>
+             </SheetClose>
+             {isConfirmed && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" className="flex-1">
+                    Editar Reserva
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="w-[90%]">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Você tem certeza que deseja cancelar a reserva?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      A ação não pode ser desfeita. Cancelamentos podem estar
+                      sujeitos a taxas. Voce tem certeza que deseja cancelar a
+                      sua reserva?
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter className="flex-row">
+                    <AlertDialogCancel className="flex-1">
+                      Cancelar
+                    </AlertDialogCancel>
+                    <AlertDialogAction asChild className="flex-1">
+                      <Button variant="destructive">Continuar</Button>
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+                 
+             )}
+            
+              
+
+             
+           </div>
+      </SheetFooter>
+
       </SheetContent>
     </Sheet>
   )
