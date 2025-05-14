@@ -1,3 +1,5 @@
+"use client"
+
 import { Prisma } from "@prisma/client";
 import { Avatar, AvatarImage } from "./avatar";
 import { Badge } from "./badge";
@@ -10,6 +12,9 @@ import Image from "next/image";
 import PhoneItem from "../phone-item";
 import { Button } from "./button";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./alert-dialog";
+import { deleteBooking } from "@/app/_actions/delete-booking";
+import { toast } from "sonner";
+import { useState } from "react";
 
 interface BookingItemProps { 
   booking: Prisma.BookingGetPayload<{ 
@@ -25,12 +30,27 @@ interface BookingItemProps {
 
 
 const BookingItem = ({ booking }: BookingItemProps) => {
+  const [isSheetOpen, setIsSheetOpen] = useState(false)
   const { service: { barbershop } } = booking;
   const isConfirmed = isFuture(booking.date)
-
+  const handleCancelBooking = async () => {
+    try { 
+      
+      await deleteBooking(booking.id)
+      setIsSheetOpen(false)
+      toast.success("Reserva cancelada com sucesso") 
+    }
+    catch (error) { 
+      console.error(error)
+      toast.error("Erro ao cancelar a reserva")
+    }
+  }
   
+  const handleSheetOpenChange = (isOpen: boolean) => {
+    setIsSheetOpen(true)
+  }
    return (
-   <Sheet>
+   <Sheet open={isSheetOpen} onOpenChange={handleSheetOpenChange}>
       <SheetTrigger className="min-w-full">
         <Card>
           <CardContent className="flex justify-between p-0">
@@ -168,7 +188,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="destructive" className="flex-1">
-                    Editar Reserva
+                    Cancelar Reserva
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-[90%]">
@@ -176,7 +196,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                     <AlertDialogTitle>
                       Você tem certeza que deseja cancelar a reserva?
                     </AlertDialogTitle>
-                    <AlertDialogDescription>
+                    <AlertDialogDescription>  
                       A ação não pode ser desfeita. Cancelamentos podem estar
                       sujeitos a taxas. Voce tem certeza que deseja cancelar a
                       sua reserva?
@@ -187,7 +207,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                       Cancelar
                     </AlertDialogCancel>
                     <AlertDialogAction asChild className="flex-1">
-                      <Button variant="destructive">Continuar</Button>
+                      <Button variant="destructive" onClick={handleCancelBooking}>Continuar</Button>
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
