@@ -9,6 +9,8 @@ import Search from "./_components/search"
 import Link from "next/link"
 import { authOptions } from "./_lib/auth"
 import { getServerSession } from "next-auth"
+import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
 
 const Home = async () => {
   // CHAMR MEU BANCO DE DADOS
@@ -46,8 +48,10 @@ const Home = async () => {
       {/* HEADER */}
       <Header />
       <div className="p-5">
-        <h2 className="mt-6 text-xl font-bold">Olá, Jimmy</h2>
-        <p>Domingo, 14 de agosto</p>
+        <h2 className="mt-6 text-xl font-bold">Olá, {session?.user ? session.user.name : "Bem vindo" }</h2>
+        <p className="capitalize">{format(new Date(), "EEEE, dd  MMMM  yyyy", { locale: ptBR })}</p>
+
+
 
         {/* BUSCA */}
         <div className="mt-6">
