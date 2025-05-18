@@ -12,8 +12,8 @@ import {
 } from "./sheet"
 import { Calendar } from "./calendar"
 import { pt } from "date-fns/locale"
-import { useEffect, useState } from "react"
-import { addDays, format, set } from "date-fns"
+import { useEffect, useMemo, useState } from "react"
+import { addDays, format, isPast, isToday, set } from "date-fns"
 import { createBooking } from "@/app/_actions/create-booking"
 import { useSession } from "next-auth/react"
 import { toast } from "sonner"
@@ -50,10 +50,21 @@ const TIME_LIST = [
   "19:00",
 ]
 
-const getTimeList = (bookings: Booking[]) => {
+interface getTimeListProps { 
+  selectedDay: Date
+  bookings: Booking[]
+}  
+
+const getTimeList = ({bookings, selectedDay}: getTimeListProps) => {
   return TIME_LIST.filter((time) => {
     const hour = Number(time.split(":")[0])
     const minutes = Number(time.split(":")[1])
+
+
+    const timeIsOnThePast = isPast(set(new Date(), { hours: hour, minutes }))
+    if (timeIsOnThePast && isToday(selectedDay)) {
+      return false
+    }
     
    
 
@@ -140,6 +151,16 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     }
   }
 
+  const timeList = useMemo(() => { 
+    if (!selectdDay) return []
+    return getTimeList({
+      bookings: dayBookings,
+      selectedDay: selectdDay
+    })
+
+  }, [selectdDay, dayBookings])
+  
+
   return (
     <>
       <Card className="p-3 px-3">
@@ -220,7 +241,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                   {/* TIME LIST */}
                   {selectdDay && (
                     <div className="flex-item flex gap-3 overflow-x-auto border-b border-solid p-5 pt-1 [&::-webkit-scrollbar]:hidden">
-                      {getTimeList(dayBookings).map((time) => (
+                      {timeList.length > 0 ? timeList.map((time) => (
                         <Button
                           key={time}
                           variant={
@@ -232,7 +253,8 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                         >
                           {time}
                         </Button>
-                      ))}
+                      )) : <p className="text-xs  text-gray-400">Não há horarios Disponíveis para datas selecionadas  </p>}
+                        
                     </div>
                   )}
 
